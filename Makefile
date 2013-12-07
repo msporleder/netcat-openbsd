@@ -1,7 +1,7 @@
 PREFIX ?= usr/local
 PKGMANDIR ?= man
 
-build:
+all:
 	${CC} -o nc netcat.c atomicio.c socks.c strtonum.c readpassphrase.c
 
 install:
