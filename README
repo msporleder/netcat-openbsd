@@ -1,0 +1,3 @@
+netcat from OpenBSD
+
+Stripped out some OpenBSD stuff to make this more portable
