@@ -1,8 +1,9 @@
 PREFIX ?= usr/local
 PKGMANDIR ?= man
+LDFLAGS += -lresolv
 
 all:
-	${CC} -o nc netcat.c atomicio.c socks.c strtonum.c readpassphrase.c
+	${CC} -o nc ${LDFLAGS} netcat.c atomicio.c socks.c strtonum.c readpassphrase.c
 
 install:
 	install -d ${DESTDIR}/${PREFIX}/bin/

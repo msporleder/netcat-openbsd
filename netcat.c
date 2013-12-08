@@ -244,6 +244,7 @@ main(int argc, char *argv[])
 		case 'S':
 			Sflag = 1;
 			break;
+#ifndef __APPLE__
 		case 'T':
 			errstr = NULL;
 			errno = 0;
@@ -258,6 +259,7 @@ main(int argc, char *argv[])
 			if (Tflag < 0 || Tflag > 255 || errstr || errno)
 				errx(1, "illegal tos value %s", optarg);
 			break;
+#endif
 		default:
 			usage(1);
 		}
@@ -975,11 +977,17 @@ set_common_sockopts(int s)
 {
 	int x = 1;
 
+#ifndef __APPLE__
 	if (Sflag) {
 		if (setsockopt(s, IPPROTO_TCP, TCP_MD5SIG,
 			&x, sizeof(x)) == -1)
 			err(1, NULL);
 	}
+#else
+	if (Sflag) {
+		warnx("-S not supported on OS X");
+	}
+#endif
 	if (Dflag) {
 		if (setsockopt(s, SOL_SOCKET, SO_DEBUG,
 			&x, sizeof(x)) == -1)
@@ -1002,6 +1010,7 @@ set_common_sockopts(int s)
 	}
 }
 
+#ifndef __APPLE__
 int
 map_tos(char *s, int *val)
 {
@@ -1049,6 +1058,7 @@ map_tos(char *s, int *val)
 
 	return (0);
 }
+#endif
 
 void
 report_connect(const struct sockaddr *sa, socklen_t salen)

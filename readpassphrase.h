@@ -32,6 +32,10 @@
 #define RPP_STDIN       0x20		/* Read from stdin, not /dev/tty */
 
 #include <sys/cdefs.h>
+#ifdef __APPLE__
+#include <sys/signal.h>
+#define _NSIG NSIG
+#endif
 
 __BEGIN_DECLS
 char * readpassphrase(const char *, char *, size_t, int);
